@@ -1,10 +1,9 @@
-import { React, Component } from "react";
-import { formatDistanceToNow } from "date-fns";
-import PropTypes from "prop-types";
-import "./task.css";
+import { React, Component } from 'react';
+import { formatDistanceToNow } from 'date-fns';
+import PropTypes from 'prop-types';
+import './task.css';
 
 class Task extends Component {
-  const i = 1;
   constructor() {
     super();
     this.state = {
@@ -20,9 +19,9 @@ class Task extends Component {
       editTask(event.target.id, value);
     }
     this.setState(() => ({
-      value: "",
+      value: '',
     }));
-    this.setState(() => ({ editing: false, value: "" }));
+    this.setState(() => ({ editing: false, value: '' }));
   }
 
   async onValueChange(event) {
@@ -38,13 +37,13 @@ class Task extends Component {
     let status;
 
     if (done) {
-      status = "completed";
+      status = 'completed';
     } else {
-      status = "active";
+      status = 'active';
     }
 
     if (editing === true) {
-      status = "editing";
+      status = 'editing';
     }
 
     return (
@@ -59,12 +58,9 @@ class Task extends Component {
           />
           <label htmlFor={id}>
             <span className="description">{description}</span>
-            <span className="created">{`created ${formatDistanceToNow(
-              createdTime,
-              {
-                includeSeconds: true,
-              },
-            )} ago`}</span>
+            <span className="created">{`created ${formatDistanceToNow(createdTime, {
+              includeSeconds: true,
+            })} ago`}</span>
           </label>
           <button
             type="button"
@@ -84,7 +80,7 @@ class Task extends Component {
             onClick={onDeleted}
           />
         </div>
-        {status === "editing" && (
+        {status === 'editing' && (
           <form id={id} onSubmit={this.handleSubmit.bind(this)}>
             <input
               id={id}
@@ -102,9 +98,9 @@ class Task extends Component {
 
 Task.defaultProps = {
   todo: {
-    id: "0",
+    id: '0',
     done: false,
-    description: "empty task",
+    description: 'empty task',
     createdTime: new Date(),
   },
 };
