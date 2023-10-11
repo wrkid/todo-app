@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import "./task.css";
 
 class Task extends Component {
+  const i = 1;
   constructor() {
     super();
     this.state = {

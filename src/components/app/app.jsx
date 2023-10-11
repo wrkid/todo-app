@@ -25,9 +25,6 @@ export default class App extends Component {
 
   addTask = (task) => {
     this.setState(({ todosData }) => {
-      
-
-      ---
       const newTask = this.createNewTask(task);
       const newData = [...todosData, newTask];
       return {
