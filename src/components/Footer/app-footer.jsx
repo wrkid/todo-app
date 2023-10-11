@@ -1,23 +1,15 @@
-import React from "react";
-import PropTypes from "prop-types";
-import TasksFilter from "../TasksFilter";
+import React from 'react';
+import PropTypes from 'prop-types';
+import TasksFilter from '../TasksFilter';
 
-import "./app-footer.css";
+import './app-footer.css';
 
 function AppFooter({ counter, filter, changeFilter, deleteCompleted }) {
-  const id = 1;
   return (
     <footer className="footer">
       <span className="todo-count">{`${counter} items left`}</span>
-      <TasksFilter
-        filter={filter}
-        changeFilter={(value) => changeFilter(value)}
-      />
-      <button
-        type="button"
-        className="clear-completed"
-        onClick={deleteCompleted}
-      >
+      <TasksFilter filter={filter} changeFilter={(value) => changeFilter(value)} />
+      <button type="button" className="clear-completed" onClick={deleteCompleted}>
         Clear completed
       </button>
     </footer>
@@ -26,7 +18,7 @@ function AppFooter({ counter, filter, changeFilter, deleteCompleted }) {
 
 AppFooter.defaultProps = {
   counter: 0,
-  filter: "All",
+  filter: 'All',
 };
 
 AppFooter.propTypes = {
