@@ -5,6 +5,7 @@ import TasksFilter from "../TasksFilter";
 import "./app-footer.css";
 
 function AppFooter({ counter, filter, changeFilter, deleteCompleted }) {
+  const id = 1;
   return (
     <footer className="footer">
       <span className="todo-count">{`${counter} items left`}</span>
