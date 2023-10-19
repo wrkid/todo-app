@@ -1,6 +1,7 @@
 import { React, Component } from 'react';
 import { formatDistanceToNow } from 'date-fns';
 import PropTypes from 'prop-types';
+import Timer from '../timer';
 import './task.css';
 
 class Task extends Component {
@@ -8,6 +9,7 @@ class Task extends Component {
     super();
     this.state = {
       editing: false,
+      // pause: false
     };
   }
 
@@ -31,8 +33,8 @@ class Task extends Component {
   }
 
   render() {
-    const { todo, onDeleted, onToggleDone } = this.props;
-    const { id, done, description, createdTime } = todo;
+    const { todo, onDeleted, onToggleDone, timerOnGo } = this.props;
+    const { id, done, description, secondsToDo, isPlayed, createdTime } = todo;
     const { editing } = this.state;
     let status;
 
@@ -57,8 +59,16 @@ class Task extends Component {
             onChange={onToggleDone}
           />
           <label htmlFor={id}>
-            <span className="description">{description}</span>
-            <span className="created">{`created ${formatDistanceToNow(createdTime, {
+            <span className="title">{description}</span>
+            <span className="description">
+              <Timer
+                id={id}
+                isPlayed={isPlayed}
+                secondsToDo={secondsToDo}
+                timerOnGo={(idT, timeLeft, isPlayedF) => timerOnGo(idT, timeLeft, isPlayedF)}
+              />
+            </span>
+            <span className="description">{`created ${formatDistanceToNow(createdTime, {
               includeSeconds: true,
             })} ago`}</span>
           </label>
@@ -77,7 +87,9 @@ class Task extends Component {
             type="button"
             aria-label="delete"
             className="icon icon-destroy"
-            onClick={onDeleted}
+            onClick={() => {
+              onDeleted(id);
+            }}
           />
         </div>
         {status === 'editing' && (
@@ -101,6 +113,7 @@ Task.defaultProps = {
     id: '0',
     done: false,
     description: 'empty task',
+    secondsToDo: 0,
     createdTime: new Date(),
   },
 };
@@ -110,11 +123,14 @@ Task.propTypes = {
     id: PropTypes.string,
     done: PropTypes.bool,
     description: PropTypes.string,
+    secondsToDo: PropTypes.number,
+    isPlayed: PropTypes.bool.isRequired,
     createdTime: PropTypes.instanceOf(Date),
   }),
   onDeleted: PropTypes.func.isRequired,
   onToggleDone: PropTypes.func.isRequired,
   editTask: PropTypes.func.isRequired,
+  timerOnGo: PropTypes.func.isRequired,
 };
 
 export default Task;

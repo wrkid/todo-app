@@ -1,8 +1,8 @@
-import React from "react";
+import React from 'react';
 
-import PropTypes from "prop-types";
+import PropTypes from 'prop-types';
 
-import "./tasks-filter.css";
+import './tasks-filter.css';
 
 function TasksFilter({ filter, changeFilter }) {
   return (
@@ -10,8 +10,8 @@ function TasksFilter({ filter, changeFilter }) {
       <li>
         <button
           type="button"
-          className={filter === "All" ? "selected" : null}
-          onClick={() => changeFilter("All")}
+          className={filter === 'All' ? 'selected' : null}
+          onClick={() => changeFilter('All')}
         >
           All
         </button>
@@ -19,8 +19,8 @@ function TasksFilter({ filter, changeFilter }) {
       <li>
         <button
           type="button"
-          className={filter === "Active" ? "selected" : null}
-          onClick={() => changeFilter("Active")}
+          className={filter === 'Active' ? 'selected' : null}
+          onClick={() => changeFilter('Active')}
         >
           Active
         </button>
@@ -28,8 +28,8 @@ function TasksFilter({ filter, changeFilter }) {
       <li>
         <button
           type="button"
-          className={filter === "Completed" ? "selected" : null}
-          onClick={() => changeFilter("Completed")}
+          className={filter === 'Completed' ? 'selected' : null}
+          onClick={() => changeFilter('Completed')}
         >
           Completed
         </button>
@@ -39,7 +39,7 @@ function TasksFilter({ filter, changeFilter }) {
 }
 
 TasksFilter.defaultProps = {
-  filter: "All",
+  filter: 'All',
 };
 
 TasksFilter.propTypes = {

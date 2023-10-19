@@ -1,47 +1,76 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 
-import PropTypes from "prop-types";
+import PropTypes from 'prop-types';
 
-import "./new-task-form.css";
+import './new-task-form.css';
 
 class NewTaskForm extends Component {
   constructor() {
     super();
     this.state = {
-      value: "",
+      inputValue: '',
+      valueMin: '0',
+      valueSec: '0',
     };
   }
 
-  async handleSubmit(event) {
+  handleSubmit(event) {
     event.preventDefault();
-    const { value } = this.state;
+    const { inputValue, valueMin, valueSec } = this.state;
     const { addTask } = this.props;
-    if (value.trim()) addTask(value);
-    this.setState(() => ({
-      value: "",
-    }));
+    if (inputValue.trim() && Number(valueSec) < 60) {
+      const secondsToDo = Number(valueMin) * 60 + Number(valueSec);
+      addTask(inputValue, secondsToDo); // valueMin, valueSec
+      this.setState(() => ({
+        inputValue: '',
+        valueMin: '',
+        valueSec: '',
+      }));
+    } else {
+      this.setState(() => ({
+        inputValue: 'Your task ...',
+      }));
+    }
   }
 
   async onValueChange(event) {
+    const value = event.target.id;
     this.setState(() => ({
-      value: event.target.value,
+      [value]: event.target.value,
     }));
   }
 
   render() {
-    const { value } = this.state;
+    const { inputValue, valueMin, valueSec } = this.state;
     return (
       <header>
-        <form id="add_task_form" onSubmit={this.handleSubmit.bind(this)}>
-          <h1>todos</h1>
+        <h1>todos</h1>
+        <form id="add_task_form" className="new-todo-form" onSubmit={(e) => this.handleSubmit(e)}>
           <input
             className="new-todo"
-            id="add_task_form"
+            id="inputValue"
             type="text"
             placeholder="What needs to be done...?"
-            value={value}
+            value={inputValue}
             onChange={(e) => this.onValueChange(e)}
           />
+          <input
+            className="new-todo-form__timer"
+            id="valueMin"
+            type="number"
+            placeholder="Min"
+            value={valueMin}
+            onChange={(e) => this.onValueChange(e)}
+          />
+          <input
+            className="new-todo-form__timer"
+            id="valueSec"
+            type="number"
+            placeholder="Sec"
+            value={valueSec}
+            onChange={(e) => this.onValueChange(e)}
+          />
+          <button aria-label="submit-button" type="submit" />
         </form>
       </header>
     );

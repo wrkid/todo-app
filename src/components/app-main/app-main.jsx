@@ -1,7 +1,7 @@
-import React from "react";
-import PropTypes from "prop-types";
-import TaskList from "../TaskList";
-import AppFooter from "../Footer";
+import React from 'react';
+import PropTypes from 'prop-types';
+import TaskList from '../TaskList';
+import AppFooter from '../Footer';
 
 function AppMain({
   todos,
@@ -12,6 +12,7 @@ function AppMain({
   filter,
   changeFilter,
   editTask,
+  timerOnGo,
 }) {
   return (
     <section className="main">
@@ -20,6 +21,7 @@ function AppMain({
         onDeleted={(id) => onDeleted(id)}
         onToggleDone={(id) => onToggleDone(id)}
         editTask={(idE, newDescription) => editTask(idE, newDescription)}
+        timerOnGo={(idT, timeLeft, isPlayedF) => timerOnGo(idT, timeLeft, isPlayedF)}
       />
       <AppFooter
         counter={counter}
@@ -34,14 +36,14 @@ function AppMain({
 AppMain.defaultProps = {
   todos: [
     {
-      id: "0",
+      id: '0',
       done: false,
-      description: "empty task",
+      description: 'empty task',
       createdTime: new Date(),
     },
   ],
   counter: 0,
-  filter: "All",
+  filter: 'All',
 };
 
 AppMain.propTypes = {
@@ -53,6 +55,7 @@ AppMain.propTypes = {
   deleteCompleted: PropTypes.func.isRequired,
   changeFilter: PropTypes.func.isRequired,
   editTask: PropTypes.func.isRequired,
+  timerOnGo: PropTypes.func.isRequired,
 };
 
 export default AppMain;

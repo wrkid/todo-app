@@ -1,11 +1,11 @@
-import React from "react";
-import PropTypes, { any } from "prop-types";
+import React from 'react';
+import PropTypes, { any } from 'prop-types';
 
-import Task from "../Task";
+import Task from '../Task';
 
-import "./task-list.css";
+import './task-list.css';
 
-function TodoList({ todos, onDeleted, onToggleDone, editTask }) {
+function TodoList({ todos, onDeleted, onToggleDone, editTask, timerOnGo }) {
   const todoList = todos.map((todo) => {
     const { id } = todo;
     return (
@@ -15,6 +15,7 @@ function TodoList({ todos, onDeleted, onToggleDone, editTask }) {
         onDeleted={() => onDeleted(id)}
         onToggleDone={() => onToggleDone(id)}
         editTask={(idE, newDescription) => editTask(idE, newDescription)}
+        timerOnGo={(idT, timeLeft, isPlayedF) => timerOnGo(idT, timeLeft, isPlayedF)}
       />
     );
   });
@@ -25,9 +26,10 @@ function TodoList({ todos, onDeleted, onToggleDone, editTask }) {
 TodoList.defaultProps = {
   todos: [
     {
-      id: "0",
+      id: '0',
       done: false,
-      description: "empty task",
+      description: 'empty task',
+      secondsToDo: 0,
       createdTime: new Date(),
     },
   ],
@@ -38,6 +40,7 @@ TodoList.propTypes = {
   onDeleted: PropTypes.func.isRequired,
   onToggleDone: PropTypes.func.isRequired,
   editTask: PropTypes.func.isRequired,
+  timerOnGo: PropTypes.func.isRequired,
 };
 
 export default TodoList;
