@@ -12,7 +12,8 @@ function AppMain({
   filter,
   changeFilter,
   editTask,
-  timerOnGo,
+  timerStop,
+  timerPlay,
 }) {
   return (
     <section className="main">
@@ -21,7 +22,8 @@ function AppMain({
         onDeleted={(id) => onDeleted(id)}
         onToggleDone={(id) => onToggleDone(id)}
         editTask={(idE, newDescription) => editTask(idE, newDescription)}
-        timerOnGo={(idT, timeLeft, isPlayedF) => timerOnGo(idT, timeLeft, isPlayedF)}
+        timerStop={(idS) => timerStop(idS)}
+        timerPlay={(idP) => timerPlay(idP)}
       />
       <AppFooter
         counter={counter}
@@ -55,7 +57,8 @@ AppMain.propTypes = {
   deleteCompleted: PropTypes.func.isRequired,
   changeFilter: PropTypes.func.isRequired,
   editTask: PropTypes.func.isRequired,
-  timerOnGo: PropTypes.func.isRequired,
+  timerStop: PropTypes.func.isRequired,
+  timerPlay: PropTypes.func.isRequired,
 };
 
 export default AppMain;

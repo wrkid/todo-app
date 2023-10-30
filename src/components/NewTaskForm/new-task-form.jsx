@@ -1,84 +1,74 @@
-import React, { Component } from 'react';
-
-import PropTypes from 'prop-types';
+import React, { useState, createRef } from 'react';
 
 import './new-task-form.css';
 
-class NewTaskForm extends Component {
-  constructor() {
-    super();
-    this.state = {
-      inputValue: '',
-      valueMin: '0',
-      valueSec: '0',
-    };
-  }
+import PropTypes from 'prop-types';
 
-  handleSubmit(event) {
+export default function NewTaskForm({ addTask }) {
+  const [input, setInput] = useState('');
+  const [inputMin, setInputMin] = useState('0');
+  const [inputSec, setInputSec] = useState('0');
+
+  const inputRef = createRef();
+  const inputMinRef = createRef();
+  const inputSecRef = createRef();
+
+  const handleSubmit = (event) => {
     event.preventDefault();
-    const { inputValue, valueMin, valueSec } = this.state;
-    const { addTask } = this.props;
-    if (inputValue.trim() && Number(valueSec) < 60) {
-      const secondsToDo = Number(valueMin) * 60 + Number(valueSec);
-      addTask(inputValue, secondsToDo); // valueMin, valueSec
-      this.setState(() => ({
-        inputValue: '',
-        valueMin: '',
-        valueSec: '',
-      }));
+    if (input.trim() && Number(inputSec) < 60) {
+      const secondsLeft = Number(inputMin) * 60 + Number(inputSec);
+      addTask(input, secondsLeft);
+      setInput('');
+      setInputMin('0');
+      setInputSec('0');
     } else {
-      this.setState(() => ({
-        inputValue: 'Your task ...',
-      }));
+      setInput('Your task here...');
     }
-  }
+  };
 
-  async onValueChange(event) {
-    const value = event.target.id;
-    this.setState(() => ({
-      [value]: event.target.value,
-    }));
-  }
+  const handleChange = () => {
+    setInput(inputRef.current.value);
+    setInputMin(inputMinRef.current.value);
+    setInputSec(inputSecRef.current.value);
+  };
 
-  render() {
-    const { inputValue, valueMin, valueSec } = this.state;
-    return (
-      <header>
-        <h1>todos</h1>
-        <form id="add_task_form" className="new-todo-form" onSubmit={(e) => this.handleSubmit(e)}>
-          <input
-            className="new-todo"
-            id="inputValue"
-            type="text"
-            placeholder="What needs to be done...?"
-            value={inputValue}
-            onChange={(e) => this.onValueChange(e)}
-          />
-          <input
-            className="new-todo-form__timer"
-            id="valueMin"
-            type="number"
-            placeholder="Min"
-            value={valueMin}
-            onChange={(e) => this.onValueChange(e)}
-          />
-          <input
-            className="new-todo-form__timer"
-            id="valueSec"
-            type="number"
-            placeholder="Sec"
-            value={valueSec}
-            onChange={(e) => this.onValueChange(e)}
-          />
-          <button aria-label="submit-button" type="submit" />
-        </form>
-      </header>
-    );
-  }
+  return (
+    <header>
+      <h1>todos</h1>
+      <form id="add_task_form" className="new-todo-form" onSubmit={(e) => handleSubmit(e)}>
+        <input
+          className="new-todo"
+          ref={inputRef}
+          id="inputValue"
+          type="text"
+          placeholder="What needs to be done...?"
+          value={input}
+          onChange={(e) => handleChange(e)}
+        />
+        <input
+          className="new-todo-form__timer"
+          ref={inputMinRef}
+          id="valueMin"
+          type="number"
+          placeholder="Min"
+          value={inputMin}
+          onChange={(e) => handleChange(e)}
+        />
+        <input
+          className="new-todo-form__timer"
+          ref={inputSecRef}
+          id="valueSec"
+          type="number"
+          placeholder="Sec"
+          value={inputSec}
+          onChange={(e) => handleChange(e)}
+        />
+        <button aria-label="submit-button" type="submit" />
+      </form>
+    </header>
+  );
 }
 
 NewTaskForm.propTypes = {
   addTask: PropTypes.func.isRequired,
 };
-
-export default NewTaskForm;

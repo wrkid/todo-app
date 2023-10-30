@@ -5,7 +5,7 @@ import Task from '../Task';
 
 import './task-list.css';
 
-function TodoList({ todos, onDeleted, onToggleDone, editTask, timerOnGo }) {
+function TodoList({ todos, onDeleted, onToggleDone, editTask, timerStop, timerPlay }) {
   const todoList = todos.map((todo) => {
     const { id } = todo;
     return (
@@ -15,7 +15,8 @@ function TodoList({ todos, onDeleted, onToggleDone, editTask, timerOnGo }) {
         onDeleted={() => onDeleted(id)}
         onToggleDone={() => onToggleDone(id)}
         editTask={(idE, newDescription) => editTask(idE, newDescription)}
-        timerOnGo={(idT, timeLeft, isPlayedF) => timerOnGo(idT, timeLeft, isPlayedF)}
+        timerStop={(idP) => timerStop(idP)}
+        timerPlay={(idP) => timerPlay(idP)}
       />
     );
   });
@@ -29,7 +30,7 @@ TodoList.defaultProps = {
       id: '0',
       done: false,
       description: 'empty task',
-      secondsToDo: 0,
+      secondsLeft: 0,
       createdTime: new Date(),
     },
   ],
@@ -40,7 +41,8 @@ TodoList.propTypes = {
   onDeleted: PropTypes.func.isRequired,
   onToggleDone: PropTypes.func.isRequired,
   editTask: PropTypes.func.isRequired,
-  timerOnGo: PropTypes.func.isRequired,
+  timerStop: PropTypes.func.isRequired,
+  timerPlay: PropTypes.func.isRequired,
 };
 
 export default TodoList;
